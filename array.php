@@ -34,4 +34,4 @@ print_r($arr["name"]["age"]);
 $arr = [1,2,3,4,5,6,7];
 echo "<br>";
 echo count($arr);
-?>
+?>    

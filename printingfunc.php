@@ -2,7 +2,8 @@
 
 // use of printf
 $a = "hello";
-echo printf("$a");
+echo printf($a);
+// printf($a);
 
 // use of sprintf
 echo sprintf("$a");

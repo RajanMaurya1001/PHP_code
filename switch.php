@@ -1,12 +1,12 @@
 <?php
-$age= 0;
+$age= 20;
 switch($age==0)
 {
-    case $age>=17;
+    case $age<=17;
     echo "Eligibal for Vote";
     break;
 
-    case $age<17;
+    case $age>17;
     echo "Not Eligibal for Vote";
     break;
 

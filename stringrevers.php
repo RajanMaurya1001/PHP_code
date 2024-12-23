@@ -10,7 +10,7 @@
 
 <?php
 $str ="hello world";
-// echo strrev("hello world");
+// echo strrev("hello world"); 
 
 $words = explode(" ",$str);
 $firstWord=strrev($words[1]);

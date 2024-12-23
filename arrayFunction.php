@@ -65,7 +65,7 @@ $arr2 = [5,2,3,7,'Rajan'];
  print_r($arr2);
 
 ?>
-<!-----------rsort(arr1)------- -->
+<!-----------range(starting,ending)------- -->
 <?php
 print_r( range(0,10));
 //  print_r($arr2);

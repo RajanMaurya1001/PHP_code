@@ -4,10 +4,10 @@ $var =100;
 
 if($var == "100" && $var === 100)
 {
-    echo "equal";
+    echo "equal <br>";
 }
 
-echo"all the best";
+echo"all the best<br>";
 
 ?>
 <!-- =============if-else============== -->
@@ -16,13 +16,13 @@ $var =100;
 
 if($var == "100" && $var === 10)
 {
-    echo "equal ";
+    echo "equal <br>";
 }
 else{
-    echo "galat hai";
+    echo "galat hai<br>";
 }
 
-echo"all the best";
+echo"all the best<br>";
 
 ?>
 
@@ -32,16 +32,16 @@ $var =100;
 
 if($var != "100" && $var === 100)
 {
-    echo "equal ";
+    echo "equal <br>";
 }
 else if(!$var){
-    echo "Again equal hai";
+    echo "Again equal hai<br>";
 }
 else if($var>10||$var<10){
-    echo "hello";
+    echo "hello<br>";
 }
 else{
-    echo"bas";
+    echo"bas<br>";
 }
 
 // echo"all the best";
@@ -56,11 +56,25 @@ $a =10;
 
 if($a++==10 && ++$a != 12)
 {
-    echo "sahi hai";
+    echo "sahi hai<br>";
 }
 else if($a-- + ++$a > 20)
 {
-    echo "sab sahi hai";
+    echo "sab sahi hai<br>";
+} 
+
+?>
+
+<?php
+$a =10;
+
+if($a++==10 && ++$a != 12)
+{
+    echo "sahi hai<br>";
+}
+else 
+{
+    echo "sab galat hai<br>";
 } 
 
 ?>

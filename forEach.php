@@ -4,5 +4,6 @@ $arr = [1,2,3,5,6,8,5];
 foreach($arr as $a => $b)
 {
     echo $a."=>".$b."<br>";
+    // echo $b     ;
 }
 ?>
