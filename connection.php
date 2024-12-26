@@ -10,13 +10,7 @@ if ($con) {
 
 // $sql ="Create table user(id int(20) primary key, name varchar(25),email varchar(50))";
 // echo mysqli_query($con,$sql);
-// if(mysqli_query($con,$sql))
-// {
-//     echo "data inserted succesfuly";
-// }
-// else{
-//     echo "error";
-// }
+
 
 $sql = "INSERT INTO user(id, name, email) VALUES (2, 'Rajan', 'rajan@gmail.com');";
 $sql .= "INSERT INTO user(id, name, email) VALUES (4, 'Raj', 'raj@gmail.com');";
@@ -28,5 +22,11 @@ $sql .= "INSERT INTO user(id, name, email) VALUES (9, 'Rakesh', 'rakesh@gmail.co
 
 mysqli_multi_query($con, $sql);
 
-
+// if(mysqli_query($con,$sql))
+// {
+//     echo "data inserted succesfuly";
+// }
+// else{
+//     echo "error";
+// }
 ?>
