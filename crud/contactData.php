@@ -111,7 +111,7 @@
         <h2 class="admin-batch-text"><i class="fa fa-file"></i> MANAGE BATCH</h2>
 
         <div class="admin-batch-button">
-            <a href="create.php" class="admin-batch-bLink">Create New Batch</a>
+            <a href="contact.php" class="admin-batch-bLink">Create New Batch</a>
 
         </div>
 
@@ -121,10 +121,9 @@
             <thead>
                 <tr>
                     <th class="admin-batch-tableHead">id</th>
-                    <th class="admin-batch-tableHead">First Name</th>
-                    <th class="admin-batch-tableHead">Last Name</th>
-                    <th class="admin-batch-tableHead">Phone</th>
+                    <th class="admin-batch-tableHead">Name</th>
                     <th class="admin-batch-tableHead">Email</th>
+                    <th class="admin-batch-tableHead">Message</th>
                     <th class="admin-batch-tableHead">Action</th>
 
 
@@ -133,30 +132,31 @@
 
             <tbody>
                 <?php
-
                 $con = mysqli_connect('localhost', 'root', '', 'app25_crud');
-                $sql = "Select * from user_regg";
+                $sql = "Select * from contact_tbl";
                 $result = mysqli_query($con, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     while ($record = mysqli_fetch_assoc($result)) {
 
-
                 ?>
+
+
+
 
 
                         <tr>
                             <td class="admin-batch-tableData"><?= $record['id'] ?></td>
-                            <td class="admin-batch-tableData"><?= $record['fname'] ?></td>
-                            <td class="admin-batch-tableData"><?= $record['lname'] ?></td>
-                            <td class="admin-batch-tableData"><?= $record['mobile'] ?></td>
+                            <td class="admin-batch-tableData"><?= $record['name'] ?></td>
                             <td class="admin-batch-tableData"><?= $record['email'] ?></td>
+                            <td class="admin-batch-tableData"><?= $record['message'] ?></td>
+
 
                             <td class="admin-batch-tableData">
-                                <a href="update.php?id= <?=  $record['id'] ?>" class="admin-batch-actionLink">
+                                <a href="contactupdate.php?id=<?= $record['id'] ?>" class="admin-batch-actionLink">
                                     <i class="fa fa-edit"></i>
 
                                 </a>
-                                <a href="delete.php?id= <?= $record['id'] ?>" class="">
+                                <a href="contactDelete.php?id=<?= $record['id'] ?>" class="">
                                     <i class="fa fa-trash"></i>
 
                                 </a>
@@ -167,7 +167,9 @@
                 <?php
 
                     }
-                }
+                    }
+                
+
                 ?>
 
 
