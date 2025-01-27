@@ -1,12 +1,3 @@
-<?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('location:login.php');
-}
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -119,9 +110,8 @@ if (!isset($_SESSION['user'])) {
     <div class="admin-batch-container">
         <h2 class="admin-batch-text"><i class="fa fa-file"></i> MANAGE BATCH</h2>
 
-        <div class="admin-batch-button" style="padding:20px;" >
+        <div class="admin-batch-button">
             <a href="create.php" class="admin-batch-bLink">Create New Batch</a>
-            <a href="logout.php" class="admin-batch-bLink" id="logout">logout</a>
 
         </div>
 
@@ -129,12 +119,16 @@ if (!isset($_SESSION['user'])) {
 
         <table class="admin-batch-tableOuter">
             <thead>
+
                 <tr>
                     <th class="admin-batch-tableHead">id</th>
-                    <th class="admin-batch-tableHead">First Name</th>
-                    <th class="admin-batch-tableHead">Last Name</th>
-                    <th class="admin-batch-tableHead">Phone</th>
-                    <th class="admin-batch-tableHead">Email</th>
+                    <th class="admin-batch-tableHead">User Name</th>
+                    <th class="admin-batch-tableHead">Date of Birth</th>
+                    <th class="admin-batch-tableHead">Gender</th>
+                    <th class="admin-batch-tableHead">Country</th>
+                    <th class="admin-batch-tableHead">Subject</th>
+                    <th class="admin-batch-tableHead">Message</th>
+                    <th class="admin-batch-tableHead">CreateAt</th>
                     <th class="admin-batch-tableHead">Action</th>
 
 
@@ -143,10 +137,8 @@ if (!isset($_SESSION['user'])) {
 
             <tbody>
                 <?php
-
                 $con = mysqli_connect('localhost', 'root', '', 'app25_crud');
-                $sql = "Select * from user_regg";
-
+                $sql = "Select * from reg_form";
                 $result = mysqli_query($con, $sql);
                 if (mysqli_num_rows($result) > 0) {
                     while ($record = mysqli_fetch_assoc($result)) {
@@ -155,12 +147,16 @@ if (!isset($_SESSION['user'])) {
                 ?>
 
 
+
                         <tr>
                             <td class="admin-batch-tableData"><?= $record['id'] ?></td>
-                            <td class="admin-batch-tableData"><?= $record['fname'] ?></td>
-                            <td class="admin-batch-tableData"><?= $record['lname'] ?></td>
-                            <td class="admin-batch-tableData"><?= $record['mobile'] ?></td>
-                            <td class="admin-batch-tableData"><?= $record['email'] ?></td>
+                            <td class="admin-batch-tableData"><?= $record['username'] ?></td>
+                            <td class="admin-batch-tableData"><?= $record['dob'] ?></td>
+                            <td class="admin-batch-tableData"><?= $record['gender'] ?></td>
+                            <td class="admin-batch-tableData"><?= $record['country'] ?></td>
+                            <td class="admin-batch-tableData"><?= $record['subject'] ?></td>
+                            <td class="admin-batch-tableData"><?= $record['message'] ?></td>
+                            <td class="admin-batch-tableData"><?= $record['createdAt'] ?></td>
 
                             <td class="admin-batch-tableData">
                                 <a href="update.php?id= <?= $record['id'] ?>" class="admin-batch-actionLink">
@@ -175,12 +171,11 @@ if (!isset($_SESSION['user'])) {
                             </td>
                         </tr>
 
-                <?php
 
+                <?php
                     }
                 }
                 ?>
-
 
             </tbody>
 
@@ -188,15 +183,7 @@ if (!isset($_SESSION['user'])) {
 
     </div>
 
-   <script>
-     var logout = document.getElementById('logout');
-     setTimeout(()=>{
-        logout.click();
-     }
-     ,100000
-     );
 
-   </script>
 </body>
 
 </html>

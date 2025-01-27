@@ -1,11 +1,78 @@
 <?php
-session_start();
-if(!isset($_SESSION['user']))
-{
-    header('location:login.php');
-}
 
+
+$con = mysqli_connect('localhost', 'root', '', 'app25_crud');
+// if($con)
+// {
+//     echo 'connection stablished';
+// }
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (empty($_POST['fname'])) {
+        echo " <script>
+          alert('fname is required');
+          window.location.href=taskCreate.php;
+        </script> ";
+    } elseif (empty($_POST['lname'])) {
+        echo " <script>
+          alert('lname is required');
+          window.location.href=taskCreate.php;
+        </script> ";
+    } elseif (empty($_POST['phone'])) {
+        echo " <script>
+          alert('phone is required');
+          window.location.href=taskCreate.php;
+        </script> ";
+    } elseif (empty($_POST['email'])) {
+        echo " <script>
+          alert('email is required');
+          window.location.href=taskCreate.php;
+        </script> ";
+    } elseif (empty($_POST['gender'])) {
+        echo " <script>
+          alert('gender is required');
+          window.location.href=taskCreate.php;
+        </script> ";
+    } elseif (empty($_POST['skill'])) {
+        echo " <script>
+          alert('skill is required');
+          window.location.href=taskCreate.php;
+        </script> ";
+    } elseif (empty($_POST['state'])) {
+        echo " <script>
+          alert('state is required');
+          window.location.href=taskCreate.php;
+        </script> ";
+    } elseif (empty($_POST['message'])) {
+        echo " <script>
+          alert('message is required');
+          window.location.href=taskCreate.php;
+        </script> ";
+    } else {
+        $fname = $_POST['fname'];
+        $lname = $_POST['lname'];
+        $phone = $_POST['phone'];
+        $email = $_POST['email'];
+        $gender = $_POST['gender'];
+        $skill = implode(',', $_POST['skill']);
+        $state = $_POST['state'];
+        $message = $_POST['message'];
+
+        $sql = "Insert into task_tbl(fname,lname,phone,email,gender,skill, state,message) 
+        values('$fname','$lname','$phone', '$email','$gender', '$skill', '$state','$message')";
+        if (mysqli_query($con, $sql)) {
+            echo " <script>
+          alert('data Inserted Succesfully');
+          window.location.href='taskread.php';
+        </script> ";
+        }
+    }
+}
 ?>
+
+
+
+
 
 
 <!DOCTYPE html>
@@ -185,7 +252,7 @@ if(!isset($_SESSION['user']))
 
 <body>
     <div class="main-container">
-        <form action="creatpost.php" method="post">
+        <form action="" method="post">
             <h2 class="reg-heading"> REGISTRATION</h2>
 
             <div class="input-row">
@@ -206,11 +273,46 @@ if(!isset($_SESSION['user']))
 
                 <div class="input-box">
                     <label for="name" class="reg-label">Phone:</label>
-                    <input type="number" class="reg-input" name="mobile">
+                    <input type="number" class="reg-input" name="phone">
                 </div>
                 <div class="input-box">
                     <label for="name" class="reg-label">Email:</label>
                     <input type="email" class="reg-input" name="email">
+                </div>
+
+            </div>
+
+            <div class="input-row">
+
+                <div class="">
+                    <label for="name" class="reg-label">Gender</label>
+                    <input type="radio" class="reg-input" name="gender" value="Male"> Male
+                    <input type="radio" class="reg-input" name="gender" value="Male"> Female
+
+                </div>
+                <div class="">
+                    <label for="name" class="reg-label">Skill:</label>
+                    <input type="checkbox" class="reg-input" name="skill[]" value="CSS"> CSS
+                    <input type="checkbox" class="reg-input" name="skill[]" value="HTML"> HTML
+                    <input type="checkbox" class="reg-input" name="skill[]" value="JavaScript"> JavaScript
+                    <input type="checkbox" class="reg-input" name="skill[]" value="PHP"> PHP
+                </div>
+
+            </div>
+
+            <div class="input-row">
+
+                <div class="input-box" style="padding-top:20px;">
+                    <label for="name" class="reg-label">State:</label>
+                    <select name="state" class="reg-input">
+                        <option value="India">India</option>
+                        <option value="China">China</option>
+                        <option value="Pakistan">Pakistan</option>
+                    </select>
+                </div>
+                <div class="input-box" style="padding-top:20px;">
+                    <label for="name" class="reg-label">Message:</label>
+                    <textarea name="message" class="reg-input"></textarea>
                 </div>
 
             </div>

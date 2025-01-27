@@ -1,11 +1,63 @@
+<!-- on signup page session section -->
+
+
 <?php
-session_start();
-if(!isset($_SESSION['user']))
-{
-    header('location:login.php');
+$con = mysqli_connect('localhost', 'root', '', 'app25_crud');
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (empty($_POST['name'])) {
+        echo "<script>
+          alert('Name field is required');
+        </script>";
+    } elseif (empty($_POST['email'])) {
+        echo "<script>
+          alert('Email field is required');
+        </script>";
+    } elseif (empty($_POST['password'])) {
+        echo "<script>
+          alert('Password field is required');
+        </script>";
+    } elseif (empty($_POST['c_password'])) {
+        echo "<script>
+          alert('conform Password field is required');
+        </script>";
+    } else {
+        $name = sanitized($_POST['name']);
+        $email = sanitized($_POST['email']);
+        $password = sanitized($_POST['password']);
+        $c_password = sanitized($_POST['c_password']);
+        if (!empty($email)) {
+            $sql = "select * from signup where email='$email'";
+            $data = mysqli_query($con, $sql);
+            if (mysqli_num_rows($data) > 0) {
+                echo "<script>
+            alert('your given email is already exist');
+        </script>";
+            } elseif ($password != $c_password) {
+                echo "<script>
+            alert('password and confirm password not matched');
+        </script>";
+            } else {
+                $sql = "insert into signup(name,email,password)values('$name','$email','$password')";
+                if (mysqli_query($con, $sql)) {
+                    echo "<script>
+                        alert('Account created successfully');
+                        window.location.href='login.php';
+                      </script>";
+                }
+            }
+        }
+    }
+}
+function sanitized($data){
+    $sanitizedata = trim($data);
+    $sanitizedata = htmlspecialchars($sanitizedata);
+    return $sanitizedata;
 }
 
+
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -34,7 +86,7 @@ if(!isset($_SESSION['user']))
 
         /*--------------- registration form page start ---------------*/
         .main-container {
-            min-height: 400px;
+            min-height: 200px;
             width: 100%;
             max-width: 800px;
             background-color: #eeeeee;
@@ -185,43 +237,40 @@ if(!isset($_SESSION['user']))
 
 <body>
     <div class="main-container">
-        <form action="creatpost.php" method="post">
-            <h2 class="reg-heading"> REGISTRATION</h2>
+        <form action="" method="post">
+            <h2 class="reg-heading"> SIGNUP</h2>
 
             <div class="input-row">
 
                 <div class="input-box">
-                    <label for="name" class="reg-label">First Name:</label>
-                    <input type="text" class="reg-input" name="fname">
+                    <label for="name" class="reg-label">Name:</label>
+                    <input type="name" class="reg-input" name="name">
                 </div>
                 <div class="input-box">
-                    <label for="name" class="reg-label">Last Name:</label>
-                    <input type="text" class="reg-input" name="lname">
-                </div>
-
-            </div>
-
-
-            <div class="input-row">
-
-                <div class="input-box">
-                    <label for="name" class="reg-label">Phone:</label>
-                    <input type="number" class="reg-input" name="mobile">
-                </div>
-                <div class="input-box">
-                    <label for="name" class="reg-label">Email:</label>
+                    <label for="email" class="reg-label">Email:</label>
                     <input type="email" class="reg-input" name="email">
                 </div>
 
             </div>
+            <div class="input-row">
 
+                <div class="input-box">
+                    <label for="name" class="reg-label">Password:</label>
+                    <input type="password" class="reg-input" name="password">
+                </div>
+                <div class="input-box">
+                    <label for="name" class="reg-label">Conform Password:</label>
+                    <input type="c_password" class="reg-input" name="c_password">
+                </div>
+
+            </div>
 
             <div class="button">
-                <button type="submit" class="reg-button">CREATE ACCOUNT</button>
+                <button type="submit" class="reg-button">Singup</button>
             </div>
 
             <div class="reg-link">
-                <h5 class="reg-h5">Already Have a Account? <a href="#">Login</a></h5>
+                <h5 class="reg-h5">Already Have a Account? <a href="#">Registration</a></h5>
             </div>
         </form>
     </div>

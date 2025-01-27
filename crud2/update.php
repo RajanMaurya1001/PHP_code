@@ -1,11 +1,69 @@
 <?php
-session_start();
-if(!isset($_SESSION['user']))
-{
-    header('location:login.php');
+
+$con = mysqli_connect('localhost', 'root', '', 'app25_crud');
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (empty($_POST['username'])) {
+        echo " <script>
+        alert('name field is requred');
+        window.location.href=update.php;
+       </script> ";
+    } elseif (empty($_POST['dob'])) {
+        echo " <script>
+        alert('dob field is requred');
+        window.location.href=update.php;
+       </script> ";
+    } elseif (empty($_POST['gender'])) {
+        echo " <script>
+        alert('gender field is requred');
+        window.location.href=update.php;
+       </script> ";
+    } elseif (empty($_POST['country'])) {
+        echo " <script>
+        alert('country field is requred');
+        window.location.href=update.php;
+       </script> ";
+    } elseif (empty($_POST['subject'])) {
+        echo " <script>
+        alert('subject field is requred');
+        window.location.href=update.php;
+       </script> ";
+    } elseif (empty($_POST['message'])) {
+        echo " <script>
+        alert('message field is requred');
+        window.location.href=update.php;
+       </script> ";
+    } else {
+        $id = $_POST['uid'];
+        $username = $_POST['username'];
+        $dob = $_POST['dob'];
+        $gender = $_POST['gender'];
+        $country = $_POST['country'];
+        $subject = implode(',', $_POST['subject']);
+        $message = $_POST['message'];
+
+
+        $sql = "Update reg_form set username='$username' ,dob='$dob' , gender='$gender' , country='$country', subject='$subject', message='$message' where id= $id";
+        if (mysqli_query($con, $sql)) {
+            echo "<script>
+        alert('Your acount is update');
+        window.location.href= 'read.php';
+        </script>";
+        }
+    }
 }
 
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $con = mysqli_connect('localhost', 'root', '', 'app25_crud');
+    $sql = "Select * from reg_form where id =$id";
+    $result = mysqli_query($con, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $record = mysqli_fetch_assoc($result);
+        $subject = explode(',', $record['subject']);
 ?>
+
 
 
 <!DOCTYPE html>
@@ -185,32 +243,55 @@ if(!isset($_SESSION['user']))
 
 <body>
     <div class="main-container">
-        <form action="creatpost.php" method="post">
+        <form action="" method="post">
             <h2 class="reg-heading"> REGISTRATION</h2>
 
             <div class="input-row">
 
                 <div class="input-box">
-                    <label for="name" class="reg-label">First Name:</label>
-                    <input type="text" class="reg-input" name="fname">
+                    <input type="hidden" value="<?= $record['id'] ?>" name="uid">
+                    <label for="name" class="reg-label">User Name:</label>
+                    <input type="text" class="reg-input" value="<?= $record['username'] ?>" name="username">
                 </div>
                 <div class="input-box">
-                    <label for="name" class="reg-label">Last Name:</label>
-                    <input type="text" class="reg-input" name="lname">
+                    <label for="name" class="reg-label">dob:</label>
+                    <input type="date" value="<?= $record['dob'] ?>" class="reg-input" name="dob">
                 </div>
 
             </div>
 
+            <div class="input-row">
+
+                <div class="" style="padding: 10px;">
+                    <label for="name" class="reg-label">Gender:</label>
+                    <input type="radio" class="reg-input" value="Male" <?= $record['gender'] == 'Male'? 'checked' : '' ?> name="gender">Male
+                    <input type="radio" class="reg-input" value="Female" <?= $record['gender'] == 'Female'? 'checked' : '' ?> name="gender">Female
+                </div>
+                <div class="input-box">
+                    <label for="name" class="reg-label">country</label>
+                    <select name="country" id="" class="reg-input">
+
+                        <option name="country" value="India" <?= $record['country'] == 'India'? 'selected' : '' ?>>India</option>
+                        <option name="country" value="Pakistan" <?= $record['country'] == 'Pakistan'? 'selected' : '' ?>>Pakistan</option>
+                        <option name="country" value="Chine" <?= $record['country'] == 'chine'? 'selected' : '' ?>>China</option>
+
+                    </select>
+                </div>
+
+            </div>
 
             <div class="input-row">
 
-                <div class="input-box">
-                    <label for="name" class="reg-label">Phone:</label>
-                    <input type="number" class="reg-input" name="mobile">
+                <div class="">
+                    <label for="subject" class="reg-label">Subject:</label>
+                    <input type="checkbox" class="reg-input" name="subject[]" <?= in_array('English', $subject)? 'checked' : '' ?> value="English"> English
+                    <input type="checkbox" class="reg-input" name="subject[]" <?= in_array('Hindi', $subject)? 'checked' : '' ?> value="Hindi"> Hindi
+                    <input type="checkbox" class="reg-input" name="subject[]" <?= in_array('Sanskrit', $subject)? 'checked' : '' ?> value="Sanskrit"> Sanskrit
+
                 </div>
                 <div class="input-box">
-                    <label for="name" class="reg-label">Email:</label>
-                    <input type="email" class="reg-input" name="email">
+                    <label for="name" class="reg-label">Message:</label>
+                    <textarea name="message" class="reg-input"><?= $record['message']?></textarea>
                 </div>
 
             </div>
@@ -226,6 +307,12 @@ if(!isset($_SESSION['user']))
         </form>
     </div>
 
+   
+
 </body>
 
 </html>
+ <?php
+        }
+}
+?>

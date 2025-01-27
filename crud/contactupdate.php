@@ -44,6 +44,7 @@ if (isset($_GET['id'])) {
         $data = mysqli_fetch_assoc($result);
         // print_r($data);
     }
+
 ?>
 
 
@@ -339,7 +340,7 @@ if (isset($_GET['id'])) {
                     </div>
 
                     <div class="contact-button">
-                        <button class="contact-login-button" type="submit">Upadate </button>
+                        <button class="contact-login-button" type="submit">Upadate</button>
                     </div>
 
                     <div class="contact-social-media">

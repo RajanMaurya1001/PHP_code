@@ -1,11 +1,61 @@
 <?php
-session_start();
-if(!isset($_SESSION['user']))
-{
-    header('location:login.php');
+
+$con = mysqli_connect('localhost', 'root', '', 'app25_crud');
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (empty($_POST['username'])) {
+        echo " <script>
+        alert('name field is requred');
+         window.location.href='create.php';
+       </script> ";
+    } elseif (empty($_POST['dob'])) {
+        echo " <script>
+        alert('dob field is requred');
+         window.location.href='create.php';
+       </script> ";
+    } elseif (empty($_POST['gender'])) {
+        echo " <script>
+        alert('gender field is requred');
+         window.location.href='create.php';
+       </script> ";
+    } elseif (empty($_POST['country'])) {
+        echo " <script>
+        alert('country field is requred');
+         window.location.href='create.php';
+       </script> ";
+    } elseif (empty($_POST['subject'])) {
+        echo " <script>
+        alert('subject field is requred');
+         window.location.href='create.php';
+       </script> ";
+    } elseif (empty($_POST['message'])) {
+        echo " <script>
+        alert('message field is requred');
+        window.location.href='create.php';
+       </script> ";
+    } else {
+        $username = $_POST['username'];
+        $dob = $_POST['dob'];
+        $gender = $_POST['gender'];
+        $country = $_POST['country'];
+        $subject = implode(',', $_POST['subject']);
+        $message = $_POST['message'];
+
+        
+        $sql = "Insert into reg_form(username, dob, gender, country, subject, message) values('$username','$dob','$gender','$country','$subject','$message')";
+        if (mysqli_query($con, $sql)) {
+            echo " <script>
+        alert('data insertd succesfully');
+        window.location.href='read.php';
+       </script> ";
+        }
+    }
 }
 
+
 ?>
+
 
 
 <!DOCTYPE html>
@@ -185,32 +235,52 @@ if(!isset($_SESSION['user']))
 
 <body>
     <div class="main-container">
-        <form action="creatpost.php" method="post">
+        <form action="" method="post">
             <h2 class="reg-heading"> REGISTRATION</h2>
 
             <div class="input-row">
 
                 <div class="input-box">
-                    <label for="name" class="reg-label">First Name:</label>
-                    <input type="text" class="reg-input" name="fname">
+                    <label for="name" class="reg-label">User Name:</label>
+                    <input type="text" class="reg-input" name="username">
                 </div>
                 <div class="input-box">
-                    <label for="name" class="reg-label">Last Name:</label>
-                    <input type="text" class="reg-input" name="lname">
+                    <label for="name" class="reg-label">dob:</label>
+                    <input type="date" class="reg-input" name="dob">
                 </div>
 
             </div>
 
+            <div class="input-row">
+
+                <div class="" style="padding: 10px;">
+                    <label for="name" class="reg-label">Gender:</label>
+                    <input type="radio" class="reg-input" name="gender" value="Male">Male
+                    <input type="radio" class="reg-input" name="gender" value="Female">Female
+                </div>
+                <div class="input-box">
+                    <label for="name" class="reg-label">country</label>
+                    <select name="country" id="" class="reg-input">
+                        <option value="India" name="country">India</option>
+                        <option value="Pakistan" name="country">Pakistan</option>
+                        <option value="China" name="country">China</option>
+                    </select>
+                </div>
+
+            </div>
 
             <div class="input-row">
 
-                <div class="input-box">
-                    <label for="name" class="reg-label">Phone:</label>
-                    <input type="number" class="reg-input" name="mobile">
+                <div class="">
+                    <label for="subject" class="reg-label">Subject:</label>
+                    <input type="checkbox" class="reg-input" name="subject[]" value="English"> English
+                    <input type="checkbox" class="reg-input" name="subject[]" value="Hindi"> Hindi
+                    <input type="checkbox" class="reg-input" name="subject[]" value="Sanskrit"> Sanskrit
+
                 </div>
                 <div class="input-box">
-                    <label for="name" class="reg-label">Email:</label>
-                    <input type="email" class="reg-input" name="email">
+                    <label for="name" class="reg-label">Message:</label>
+                    <textarea name="message" class="reg-input"></textarea>
                 </div>
 
             </div>

@@ -1,11 +1,28 @@
 <?php
+$con = mysqli_connect('localhost', 'root', '', 'app25_crud');
 session_start();
-if(!isset($_SESSION['user']))
-{
-    header('location:login.php');
+if (isset($_SESSION['user'])) {
+    header('location:read.php');
 }
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $sql = "select * from signup where email = '$email' and password='$password'";
+    $result = mysqli_query($con, $sql);
+    if (mysqli_num_rows($result) > 0) {
+        $_SESSION['user'] = $email;
+        header('location:read.php');
+    } else {
+        echo " 
+    <script>
+    alert('Email or Password not matched');
+    </script>";
+    }
+}
 ?>
+
+
 
 
 <!DOCTYPE html>
@@ -34,7 +51,7 @@ if(!isset($_SESSION['user']))
 
         /*--------------- registration form page start ---------------*/
         .main-container {
-            min-height: 400px;
+            min-height: 200px;
             width: 100%;
             max-width: 800px;
             background-color: #eeeeee;
@@ -185,43 +202,28 @@ if(!isset($_SESSION['user']))
 
 <body>
     <div class="main-container">
-        <form action="creatpost.php" method="post">
-            <h2 class="reg-heading"> REGISTRATION</h2>
+        <form action="" method="post">
+            <h2 class="reg-heading"> LOGIN</h2>
 
             <div class="input-row">
 
-                <div class="input-box">
-                    <label for="name" class="reg-label">First Name:</label>
-                    <input type="text" class="reg-input" name="fname">
-                </div>
-                <div class="input-box">
-                    <label for="name" class="reg-label">Last Name:</label>
-                    <input type="text" class="reg-input" name="lname">
-                </div>
-
-            </div>
-
-
-            <div class="input-row">
-
-                <div class="input-box">
-                    <label for="name" class="reg-label">Phone:</label>
-                    <input type="number" class="reg-input" name="mobile">
-                </div>
                 <div class="input-box">
                     <label for="name" class="reg-label">Email:</label>
                     <input type="email" class="reg-input" name="email">
                 </div>
+                <div class="input-box">
+                    <label for="name" class="reg-label">Password:</label>
+                    <input type="password" class="reg-input" name="password">
+                </div>
 
             </div>
 
-
             <div class="button">
-                <button type="submit" class="reg-button">CREATE ACCOUNT</button>
+                <button type="submit" class="reg-button">Login</button>
             </div>
 
             <div class="reg-link">
-                <h5 class="reg-h5">Already Have a Account? <a href="#">Login</a></h5>
+                <h5 class="reg-h5">Already Have a Account? <a href="#">Registration</a></h5>
             </div>
         </form>
     </div>
